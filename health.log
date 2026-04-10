@@ -1,0 +1,12 @@
+2026-04-10 12:55:39,164 - INFO - CPU - 6.8% - OK
+2026-04-10 12:55:39,165 - INFO - Memory - 94.0% - WARNING
+2026-04-10 12:55:39,165 - INFO - Disk - 49.3% - OK
+2026-04-10 12:55:39,165 - INFO - Service: nginx - not running - WARNING
+2026-04-10 12:55:39,166 - INFO - Service: mysql - not running - WARNING
+2026-04-10 12:55:39,166 - INFO - Service: redis - not running - WARNING
+2026-04-10 13:10:12,553 - INFO - CPU - 0.0% - OK
+2026-04-10 13:10:12,554 - INFO - Memory - 12.2% - OK
+2026-04-10 13:10:12,555 - INFO - Disk - 0.1% - OK
+2026-04-10 13:10:12,555 - INFO - Service: nginx - not found - WARNING
+2026-04-10 13:10:12,555 - INFO - Service: mysql - not found - WARNING
+2026-04-10 13:10:12,556 - INFO - Service: redis - not found - WARNING

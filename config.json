@@ -1,0 +1,16 @@
+{
+  "thresholds": {
+    "cpu_percent": 80,
+    "memory_percent": 85,
+    "disk_percent": 90
+  },
+  "services": ["nginx", "mysql", "redis"],
+  "email": {
+    "enabled": false,
+    "smtp_server": "smtp.gmail.com",
+    "smtp_port": 587,
+    "sender": "your@email.com",
+    "receiver": "your@email.com",
+    "password": "your_app_password"
+  }
+}

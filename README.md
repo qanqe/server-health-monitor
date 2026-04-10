@@ -12,7 +12,7 @@ Works on Linux (systemctl) and Windows (sc query) without changing anything.
 
 - CPU, memory, and disk monitoring via `psutil`
 - Service checks using `systemctl` on Linux and `sc query` on Windows
-- Thresholds you control in `config.json` — nothing hardcoded
+- Thresholds you control in `config.json` - nothing hardcoded
 - Email alerts over SMTP/TLS when warnings fire
 - All runs appended to `health.log` with timestamps
 - Color-coded terminal output with a clean summary table

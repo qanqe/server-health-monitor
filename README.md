@@ -1,38 +1,29 @@
-# Server Health Monitor
+# server-health-monitor
 
-A lightweight, cross-platform server health monitoring tool written in Python. Tracks CPU, memory, and disk usage alongside service availability, logs results to a file, and sends email alerts when configurable thresholds are exceeded.
+Lightweight cross-platform health monitor written in Python. Checks CPU, memory, disk usage, and service status against thresholds you define. Logs everything and fires email alerts when something goes sideways.
 
----
+## What it does
 
-## Overview
+Gives you a terminal snapshot of your system's vital signs on demand (or on a schedule). Any metric that crosses a threshold gets flagged, logged, and optionally emailed to you. That's it — no agent running in the background, no dashboard to babysit.
 
-Server Health Monitor gives you a quick snapshot of your system's vital signs from the terminal. It checks resource usage against thresholds you define, flags anything out of range, and can fire off an email alert so you know about problems before they become outages.
-
----
+Works on Linux (systemctl) and Windows (sc query) without changing anything.
 
 ## Features
 
-- **CPU, memory, and disk monitoring** via `psutil` — works on Linux, macOS, and Windows
-- **Service status checks** — uses `sc query` on Windows and `systemctl` on Linux
-- **Configurable thresholds** — set your own warning levels in `config.json`
-- **Email alerts** — sends a summary of all warnings over SMTP with TLS
-- **Persistent logging** — all results are written to `health.log` with timestamps
-- **Clean terminal output** — color-coded status icons and an at-a-glance summary table
-
----
+- CPU, memory, and disk monitoring via `psutil`
+- Service checks using `systemctl` on Linux and `sc query` on Windows
+- Thresholds you control in `config.json` — nothing hardcoded
+- Email alerts over SMTP/TLS when warnings fire
+- All runs appended to `health.log` with timestamps
+- Color-coded terminal output with a clean summary table
 
 ## Requirements
 
-- Python 3.7+
-- [`psutil`](https://pypi.org/project/psutil/)
-
-Install the dependency:
+Python 3.7+ and `psutil`. That's the only dependency.
 
 ```bash
 pip install psutil
 ```
-
----
 
 ## Installation
 
@@ -42,21 +33,17 @@ cd server-health-monitor
 pip install psutil
 ```
 
----
-
 ## Usage
 
 ```bash
 python monitor.py
 ```
 
-Results are printed to the terminal and appended to `health.log` in the same directory.
-
----
+Output goes to the terminal and gets appended to `health.log` in the same directory.
 
 ## Configuration
 
-All settings live in `config.json`:
+Everything lives in `config.json`:
 
 ```json
 {
@@ -81,26 +68,24 @@ All settings live in `config.json`:
 
 | Key | Default | Description |
 |---|---|---|
-| `cpu_percent` | `80` | Warning threshold for CPU usage (%) |
-| `memory_percent` | `85` | Warning threshold for RAM usage (%) |
-| `disk_percent` | `90` | Warning threshold for disk usage (%) |
+| `cpu_percent` | `80` | CPU warning level (%) |
+| `memory_percent` | `85` | RAM warning level (%) |
+| `disk_percent` | `90` | Disk warning level (%) |
 
 ### Services
 
-List service names to check under `"services"`. The monitor checks whether each service is running:
+Put service names in the `"services"` array. The monitor checks if each one is running:
 
-- **Windows** — uses `sc query <service>`
-- **Linux** — uses `systemctl is-active <service>`
+- Windows uses `sc query <service>`
+- Linux uses `systemctl is-active <service>`
 
-Use the exact service name as registered with the OS (e.g. `nginx`, `mysql`, `sshd`).
+Use the exact name the OS knows it by — `nginx`, `sshd`, `mysql`, etc.
 
-### Email Alerts
+### Email alerts
 
-Set `"enabled": true` and fill in your SMTP credentials to receive email alerts whenever a warning is triggered. For Gmail, generate an [App Password](https://support.google.com/accounts/answer/185833) instead of using your account password.
+Flip `"enabled"` to `true` and fill in your SMTP credentials. For Gmail you'll need an [App Password](https://support.google.com/accounts/answer/185833) — don't use your main account password.
 
----
-
-## Sample Output
+## Sample output
 
 ```
 ==================================================
@@ -117,13 +102,11 @@ Set `"enabled": true` and fill in your SMTP credentials to receive email alerts 
 ==================================================
 ```
 
-When warnings are present and email alerts are enabled, a notification is sent immediately after the report is printed.
+If email is enabled and warnings fired, the alert goes out right after the report prints.
 
----
+## Log file
 
-## Log File
-
-Every run appends timestamped entries to `health.log`:
+Each run appends entries to `health.log`:
 
 ```
 2026-04-10 14:32:07,412 - INFO - CPU - 23.4% - OK
@@ -134,23 +117,19 @@ Every run appends timestamped entries to `health.log`:
 2026-04-10 14:32:07,417 - INFO - Service: redis - running - OK
 ```
 
----
+## Automating runs
 
-## Automating Runs
-
-**Linux / macOS (cron)** — check every 5 minutes:
+Linux/macOS via cron, every 5 minutes:
 
 ```bash
 */5 * * * * /usr/bin/python3 /path/to/monitor.py
 ```
 
-**Windows (Task Scheduler)** — create a Basic Task that runs:
+Windows via Task Scheduler, point it at:
 
 ```
 python C:\path\to\monitor.py
 ```
-
----
 
 ## License
 
